@@ -5,13 +5,16 @@ import { useState, useEffect } from "react";
 import { Search, ShoppingCart, Heart, User, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 
+import { getSiteConfig } from "@/lib/contentful";
+
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-
+  const [siteConfig, setSiteConfig] = useState<any>(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
+    getSiteConfig().then(setSiteConfig);
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
@@ -39,8 +42,14 @@ const Navbar = () => {
               />
             </div>
             <div className="flex flex-col">
-              <span className="text-xl font-black tracking-tighter text-white leading-none">
-                ROYAL <span className="text-luxury-gold">EXCHANGE</span>
+              <span className="text-xl font-black tracking-tighter text-white leading-none uppercase">
+                {siteConfig?.fields?.siteName ? (
+                  <>
+                    {siteConfig.fields.siteName.split(' ')[0]} <span className="text-luxury-gold">{siteConfig.fields.siteName.split(' ').slice(1).join(' ')}</span>
+                  </>
+                ) : (
+                  <>ROYAL <span className="text-luxury-gold">EXCHANGE</span></>
+                )}
               </span>
               <span className="text-[8px] font-bold tracking-[0.4em] text-gray-500 uppercase mt-1">Heritage & Trust</span>
             </div>

@@ -5,22 +5,30 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Filter, ChevronDown, Sparkles, ArrowRight, Heart, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { getGemstones } from "@/lib/contentful";
-import { hardcodedGems } from "@/lib/data";
+import { Gemstone } from "@/lib/data";
 
 export default function CatalogPage() {
   const [filter, setFilter] = useState("All Gemstones");
-  const [gems, setGems] = useState(hardcodedGems);
+  const [gems, setGems] = useState<Gemstone[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
-      const cmsGems = await getGemstones();
-      if (cmsGems && cmsGems.length > 0) {
-        const mappedGems = cmsGems.map((item: any) => ({
-          id: item.sys.id,
-          ...item.fields,
-          image: item.fields.image?.fields?.file?.url || item.fields.image || "/luxury_ruby_gemstone_1774331709105.png"
-        }));
-        setGems(mappedGems);
+      setLoading(true);
+      try {
+        const cmsGems = await getGemstones();
+        if (cmsGems && cmsGems.length > 0) {
+          const mappedGems: Gemstone[] = cmsGems.map((item: any) => ({
+            id: item.sys.id,
+            ...item.fields,
+            mainImage: item.fields.mainImage?.fields?.file?.url || "/luxury_ruby_gemstone_1774331709105.png"
+          }));
+          setGems(mappedGems);
+        }
+      } catch (error) {
+        console.error("Fetch error:", error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchData();
@@ -56,13 +64,21 @@ export default function CatalogPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <AnimatePresence mode="popLayout">
-            {gems.map((gem, i) => (
-              <GemstoneCard key={gem.id} gem={gem} index={i} />
+        {loading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[1, 2, 3, 4, 5, 6].map((i) => (
+              <div key={i} className="aspect-[4/5] bg-zinc-900 rounded-[2rem] animate-pulse" />
             ))}
-          </AnimatePresence>
-        </div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <AnimatePresence mode="popLayout">
+              {gems.map((gem, i) => (
+                <GemstoneCard key={gem.id} gem={gem} index={i} />
+              ))}
+            </AnimatePresence>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -83,7 +99,7 @@ function GemstoneCard({ gem, index }: { gem: any; index: number }) {
       <Link href={`/catalog/${gem.id}`}>
         <div className="relative aspect-[4/5] overflow-hidden">
           <img 
-            src={gem.image} 
+            src={gem.mainImage} 
             alt={gem.name}
             className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
           />
@@ -118,7 +134,7 @@ function GemstoneCard({ gem, index }: { gem: any; index: number }) {
           <div className="absolute top-6 left-6">
             <div className="flex items-center gap-2 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
               <Sparkles className="w-3 h-3 text-luxury-gold" />
-              <span className="text-[10px] font-bold text-white uppercase tracking-widest">Score {gem.investment}%</span>
+              <span className="text-[10px] font-bold text-white uppercase tracking-widest">Score {gem.investmentScore}%</span>
             </div>
           </div>
         </div>
@@ -136,7 +152,7 @@ function GemstoneCard({ gem, index }: { gem: any; index: number }) {
             <div className="flex gap-4">
               <div className="text-center">
                 <p className="text-[10px] text-gray-500 uppercase font-bold tracking-widest mb-1">Carat</p>
-                <p className="text-white text-sm font-bold">{gem.carat}</p>
+                <p className="text-white text-sm font-bold">{gem.caratWeight}</p>
               </div>
               <div className="text-center">
                 <p className="text-[10px] text-gray-500 uppercase font-bold tracking-widest mb-1">Color</p>
