@@ -35,7 +35,7 @@ export default function CatalogPage() {
   }, []);
 
   return (
-    <div className="pt-32 pb-24 bg-black min-h-screen">
+    <div className="pt-32 pb-24 bg-luxury-black min-h-screen">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-8">
           <div>
@@ -47,7 +47,7 @@ export default function CatalogPage() {
           <div className="flex items-center gap-4">
             <div className="relative group">
               <select 
-                className="appearance-none bg-zinc-900 border border-white/10 rounded-full px-8 py-3 text-sm text-white pr-12 focus:outline-none focus:border-luxury-ruby transition-all cursor-pointer"
+                className="appearance-none bg-white/5 border border-white/10 rounded-full px-8 py-4 text-[10px] font-black uppercase tracking-widest text-white pr-12 focus:outline-none focus:border-luxury-ruby transition-all cursor-pointer backdrop-blur-md"
                 onChange={(e) => setFilter(e.target.value)}
               >
                 <option>All Gemstones</option>
@@ -58,8 +58,8 @@ export default function CatalogPage() {
               <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none group-hover:text-white transition-colors" />
             </div>
             
-            <button className="p-3 bg-zinc-900 border border-white/10 rounded-full hover:bg-luxury-ruby transition-all group">
-              <Filter className="w-5 h-5 text-gray-400 group-hover:text-white" />
+            <button className="p-4 bg-white/5 border border-white/10 rounded-full hover:bg-luxury-ruby transition-all group backdrop-blur-md">
+              <Filter className="w-4 h-4 text-gray-400 group-hover:text-white" />
             </button>
           </div>
         </div>
@@ -67,7 +67,7 @@ export default function CatalogPage() {
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[1, 2, 3, 4, 5, 6].map((i) => (
-              <div key={i} className="aspect-[4/5] bg-zinc-900 rounded-[2rem] animate-pulse" />
+              <div key={i} className="aspect-[4/5] bg-white/5 rounded-[2.5rem] animate-pulse" />
             ))}
           </div>
         ) : (
@@ -94,7 +94,7 @@ function GemstoneCard({ gem, index }: { gem: any; index: number }) {
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.9 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="group relative bg-zinc-950 border border-white/5 rounded-[2rem] overflow-hidden hover:border-luxury-ruby/30 transition-all duration-500"
+      className="group relative glass-card overflow-hidden transition-all duration-700 hover:border-luxury-ruby/50 shadow-2xl shadow-black"
     >
       <Link href={`/catalog/${gem.id}`}>
         <div className="relative aspect-[4/5] overflow-hidden">

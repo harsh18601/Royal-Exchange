@@ -7,10 +7,35 @@ import Footer from "@/components/Footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Royal Ruby & Sapphire Exchange | Luxury Gemstone Marketplace",
-  description: "Bespoke AI-powered marketplace for certified loose Ruby and Sapphire gemstones.",
+  title: "Royal Exchange | Luxury Gemstone Marketplace & Investment Hub",
+  description: "The world's premier AI-powered marketplace for certified, investment-grade loose Ruby and Sapphire gemstones. Heritage, Trust, and Excellence since 1924.",
+  keywords: ["luxury gemstones", "investment rubies", "certified sapphires", "GIA rubies", "loose gemstones", "jewellery investment", "Royal Exchange"],
+  authors: [{ name: "Royal Exchange Heritage" }],
+  openGraph: {
+    title: "Royal Exchange | Luxury Gemstone Marketplace",
+    description: "Acquire investment-grade, ethically sourced Rubies and Sapphires through our AI-curated private exchange.",
+    url: "https://royal-exchange.luxury",
+    siteName: "Royal Exchange",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Royal Exchange Luxury Gemstones",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Royal Exchange | Luxury Gemstones",
+    description: "The premier AI-powered marketplace for investment-grade gemstones.",
+    images: ["/og-image.jpg"],
+  },
   icons: {
-    icon: "/logo.png",
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
   },
 };
 

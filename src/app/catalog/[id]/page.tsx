@@ -66,7 +66,7 @@ export default function GemDetailsPage() {
     }
   }, [gem]);
 
-  if (!gem) return <div className="min-h-screen bg-black flex items-center justify-center text-white uppercase tracking-[0.5em] text-xs">Initializing GemAI Intelligence...</div>;
+  if (!gem) return <div className="min-h-screen bg-luxury-black flex items-center justify-center text-white uppercase tracking-[0.5em] text-[10px] font-black">Initializing GemAI Intelligence...</div>;
 
   const handleInquirySubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -98,7 +98,7 @@ export default function GemDetailsPage() {
   };
 
   return (
-    <div className="pt-32 pb-24 bg-black min-h-screen">
+    <div className="pt-32 pb-24 bg-luxury-black min-h-screen">
       <div className="max-w-7xl mx-auto px-6">
         <Link href="/catalog" className="inline-flex items-center gap-2 text-gray-500 hover:text-white transition-colors mb-12 uppercase tracking-widest text-xs font-bold group">
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Back to Exchange
@@ -111,7 +111,7 @@ export default function GemDetailsPage() {
             animate={{ opacity: 1, x: 0 }}
             className="space-y-6"
           >
-            <div className="relative aspect-square rounded-[3rem] overflow-hidden border border-white/5 bg-zinc-950">
+            <div className="relative aspect-square rounded-[3rem] overflow-hidden border border-white/5 bg-white/5 shadow-2xl">
               <img src={gem.mainImage} alt={gem.name} className="w-full h-full object-cover" />
               <div className="absolute top-8 left-8">
                 <div className="bg-black/40 backdrop-blur-md px-4 py-2 rounded-full border border-white/10 flex items-center gap-2">
@@ -159,23 +159,23 @@ export default function GemDetailsPage() {
             <div className="grid grid-cols-2 gap-y-8 gap-x-12 mb-12">
               <div>
                 <p className="text-[10px] text-gray-500 uppercase font-bold tracking-[0.2em] mb-2 text-center">Weight</p>
-                <div className="bg-zinc-900 border border-white/5 py-3 rounded-xl text-center text-white font-bold">{gem.caratWeight} Carats</div>
+                <div className="glass-card py-4 text-center text-white font-bold">{gem.caratWeight} Carats</div>
               </div>
               <div>
                 <p className="text-[10px] text-gray-500 uppercase font-bold tracking-[0.2em] mb-2 text-center">Dimensions</p>
-                <div className="bg-zinc-900 border border-white/5 py-3 rounded-xl text-center text-white font-bold">{gem.dimensions}</div>
+                <div className="glass-card py-4 text-center text-white font-bold">{gem.dimensions}</div>
               </div>
               <div>
                 <p className="text-[10px] text-gray-500 uppercase font-bold tracking-[0.2em] mb-2 text-center">Treatment</p>
-                <div className="bg-zinc-900 border border-white/5 py-3 rounded-xl text-center text-white font-bold">{gem.treatment}</div>
+                <div className="glass-card py-4 text-center text-white font-bold">{gem.treatment}</div>
               </div>
               <div>
                 <p className="text-[10px] text-gray-500 uppercase font-bold tracking-[0.2em] mb-2 text-center">Certificate</p>
-                <div className="bg-zinc-900 border border-white/5 py-3 rounded-xl text-center text-white font-bold">{gem.certificateNumber}</div>
+                <div className="glass-card py-4 text-center text-white font-bold">{gem.certificateNumber}</div>
               </div>
             </div>
 
-            <div className="bg-zinc-900/50 rounded-3xl p-8 border border-white/5 mb-12">
+            <div className="glass-card p-10 shadow-2xl mb-12">
               <div className="flex items-center gap-2 mb-6">
                 <Sparkles className="w-5 h-5 text-luxury-gold" />
                 <h3 className="text-white font-bold uppercase tracking-widest">GemAI Intelligence Analysis</h3>
@@ -245,7 +245,7 @@ export default function GemDetailsPage() {
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="relative w-full max-w-lg bg-zinc-950 border border-white/10 rounded-[3rem] p-10 overflow-hidden"
+              className="relative w-full max-w-lg glass-card p-10 overflow-hidden shadow-[0_0_100px_rgba(185,28,28,0.2)]"
             >
               <div className="absolute top-0 right-0 w-32 h-32 bg-luxury-ruby/20 blur-[80px]" />
               

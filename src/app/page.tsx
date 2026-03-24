@@ -8,140 +8,190 @@ import Testimonials from "@/components/Testimonials";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-black overflow-x-hidden">
+    <main className="min-h-screen bg-luxury-black overflow-x-hidden">
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center pt-20">
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 to-black z-10" />
-          <div className="w-full h-full bg-[url('/luxury_ruby_gemstone_1774331709105.png')] bg-cover bg-center opacity-40 scale-110 blur-sm animate-pulse-slow" />
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-luxury-black/50 to-luxury-black z-10" />
+          <motion.div 
+            initial={{ scale: 1.2, opacity: 0 }}
+            animate={{ scale: 1, opacity: 0.4 }}
+            transition={{ duration: 2 }}
+            className="w-full h-full bg-[url('/luxury_ruby_gemstone_1774331709105.png')] bg-cover bg-center blur-sm animate-pulse-slow font-display" 
+          />
         </div>
 
-        <div className="relative z-20 text-center px-6 max-w-5xl">
+        <div className="relative z-20 text-center px-6 max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <div className="flex items-center justify-center gap-2 mb-6">
-              <span className="h-px w-8 bg-luxury-gold" />
-              <span className="text-luxury-gold tracking-[0.4em] text-xs font-bold uppercase">Heritage & Trust</span>
-              <span className="h-px w-8 bg-luxury-gold" />
+            <div className="flex items-center justify-center gap-3 mb-8">
+              <span className="h-px w-12 bg-luxury-gold/50" />
+              <span className="text-luxury-gold tracking-[0.6em] text-[10px] font-black uppercase font-display">Est. 1924 • Heritage & Trust</span>
+              <span className="h-px w-12 bg-luxury-gold/50" />
             </div>
-            <h1 className="text-5xl md:text-8xl font-black text-white mb-8 tracking-tighter leading-tight">
-              RARE <span className="text-luxury-ruby border-b-4 border-luxury-ruby/20">RUBIES</span> & <br />
-              TIMELESS <span className="text-luxury-sapphire border-b-4 border-luxury-sapphire/20">SAPPHIRES</span>
+            
+            <h1 className="text-6xl md:text-9xl font-black text-white mb-8 tracking-tighter leading-[0.85] font-display uppercase">
+              The Sovereign <br />
+              <span className="text-gradient-gold">Collection</span>
             </h1>
-            <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed font-light">
-              Access the world's most exclusive collection of investment-grade, certified loose gemstones. Powered by GemAI intuition.
+            
+            <p className="text-gray-400 text-lg md:text-2xl max-w-3xl mx-auto mb-12 leading-relaxed font-light">
+              Acquire investment-grade, ethically sourced Rubies and Sapphires through our AI-curated private exchange.
             </p>
+
             <div className="flex flex-col md:flex-row items-center justify-center gap-6">
               <Link href="/catalog">
                 <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="bg-luxury-ruby text-white px-10 py-5 rounded-full font-bold text-sm tracking-widest uppercase hover:bg-red-700 transition-all shadow-2xl shadow-red-900/20 flex items-center gap-2"
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="bg-luxury-ruby text-white px-12 py-6 rounded-full font-black text-xs tracking-[0.3em] uppercase hover:bg-red-700 transition-all shadow-2xl shadow-red-900/40 flex items-center gap-3"
                 >
-                  Explore Collection <ArrowRight className="w-4 h-4" />
+                  Enter Exchange <ArrowRight className="w-4 h-4" />
                 </motion.button>
               </Link>
-              <Link href="/ai-advisor">
+              <Link href="/about">
                 <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="bg-white/5 backdrop-blur-md border border-white/10 text-white px-10 py-5 rounded-full font-bold text-sm tracking-widest uppercase hover:bg-white/10 transition-all"
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="glass-button text-white px-12 py-6 rounded-full font-black text-xs tracking-[0.3em] uppercase"
                 >
-                  Consult GemAI Advisor
+                  Our Heritage
                 </motion.button>
               </Link>
+            </div>
+
+            <div className="mt-20 flex flex-wrap justify-center gap-12 opacity-50 grayscale transition-all hover:grayscale-0">
+               <div className="flex items-center gap-2">
+                 <ShieldCheck className="w-5 h-5 text-luxury-gold" />
+                 <span className="text-[10px] font-bold text-white uppercase tracking-widest">GIA Certified Vaults</span>
+               </div>
+               <div className="flex items-center gap-2">
+                 <Globe className="w-5 h-5 text-luxury-gold" />
+                 <span className="text-[10px] font-bold text-white uppercase tracking-widest">Global Secure Logistics</span>
+               </div>
+               <div className="flex items-center gap-2">
+                 <Sparkles className="w-5 h-5 text-luxury-gold" />
+                 <span className="text-[10px] font-bold text-white uppercase tracking-widest">GemAI Intelligence</span>
+               </div>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Value Proposition */}
-      <section className="py-24 border-y border-white/5 bg-zinc-950">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12">
-          <div className="text-center group">
-            <div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-luxury-ruby transition-all duration-500">
-              <ShieldCheck className="w-8 h-8 text-luxury-ruby group-hover:text-white transition-colors" />
-            </div>
-            <h3 className="text-white font-bold text-xl mb-3">Guaranteed Authenticity</h3>
-            <p className="text-gray-500 text-sm leading-relaxed">Every stone is accompanied by world-renowned laboratory certification (GIA, IGI, GRS).</p>
-          </div>
-          <div className="text-center group">
-            <div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-luxury-sapphire transition-all duration-500">
-              <Gem className="w-8 h-8 text-luxury-sapphire group-hover:text-white transition-colors" />
-            </div>
-            <h3 className="text-white font-bold text-xl mb-3">Investment Grade</h3>
-            <p className="text-gray-500 text-sm leading-relaxed">Specializing only in natural, unheated, and top-tier color saturation gemstones.</p>
-          </div>
-          <div className="text-center group">
-            <div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-luxury-gold transition-all duration-500">
-              <Globe className="w-8 h-8 text-luxury-gold group-hover:text-white transition-colors" />
-            </div>
-            <h3 className="text-white font-bold text-xl mb-3">Global Sourcing</h3>
-            <p className="text-gray-500 text-sm leading-relaxed">Direct access to primary markets in Burma, Mozambique, Sri Lanka, and Madagascar.</p>
+      {/* Verification & Trust Section */}
+      <section className="py-32 bg-luxury-black border-y border-white/5 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-luxury-ruby/5 blur-[120px] -z-10 animate-pulse-slow" />
+        
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+            <motion.div
+               initial={{ opacity: 0, x: -30 }}
+               whileInView={{ opacity: 1, x: 0 }}
+               viewport={{ once: true }}
+            >
+              <p className="text-luxury-ruby font-black uppercase tracking-[0.4em] mb-4 text-xs">Unmatched Credibility</p>
+              <h2 className="text-4xl md:text-6xl font-black text-white mb-8 tracking-tighter uppercase font-display leading-tight">
+                Beyond the <br />Standard <span className="text-luxury-gold italic">Proof</span>
+              </h2>
+              <div className="space-y-8">
+                <div className="flex gap-6 p-8 glass-card">
+                  <div className="w-14 h-14 bg-luxury-ruby/10 rounded-2xl flex items-center justify-center shrink-0">
+                    <ShieldCheck className="w-7 h-7 text-luxury-ruby" />
+                  </div>
+                  <div>
+                    <h4 className="text-white font-bold uppercase tracking-widest mb-2">Multilateral Verification</h4>
+                    <p className="text-gray-400 text-sm leading-relaxed font-light">Every stone is verified by GIA, IGI, and GemAI's proprietary internal neural analysis before listing.</p>
+                  </div>
+                </div>
+                <div className="flex gap-6 p-8 glass-card">
+                  <div className="w-14 h-14 bg-luxury-gold/10 rounded-2xl flex items-center justify-center shrink-0">
+                    <Globe className="w-7 h-7 text-luxury-gold" />
+                  </div>
+                  <div>
+                    <h4 className="text-white font-bold uppercase tracking-widest mb-2">Immutable Provenance</h4>
+                    <p className="text-gray-400 text-sm leading-relaxed font-light">Track the entire history from mine to market through our secure, blockchain-verified ledger system.</p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+               initial={{ opacity: 0, scale: 0.9 }}
+               whileInView={{ opacity: 1, scale: 1 }}
+               viewport={{ once: true }}
+               className="relative"
+            >
+              <div className="aspect-square glass-card p-1 items-center justify-center flex overflow-hidden group">
+                 <img 
+                    src="/luxury_sapphire_gemstone_1_1774331732593.png" 
+                    alt="Authenticity Verification" 
+                    className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                 />
+                 <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
+                 <div className="absolute bottom-10 left-10 right-10 p-8 glass-card animate-float">
+                    <div className="flex justify-between items-center mb-4">
+                       <span className="text-[10px] font-black text-white uppercase tracking-[0.3em]">Certification Verified</span>
+                       <Sparkles className="w-4 h-4 text-luxury-gold" />
+                    </div>
+                    <p className="text-white text-xl font-bold font-mono">ID: RE-2024-8842</p>
+                    <p className="text-gray-400 text-[10px] uppercase font-bold tracking-widest mt-2">Verified by AI Intelligence Protocol</p>
+                 </div>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Featured Slabs - Dynamic UI */}
-      <section className="py-24 bg-black">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row items-end justify-between mb-16 gap-4">
-            <div>
-              <h2 className="text-4xl md:text-6xl font-black text-white mb-4">THE CURATED<br />GALLERY</h2>
-              <div className="w-24 h-2 bg-luxury-ruby" />
-            </div>
-            <p className="text-gray-400 max-w-sm font-light text-right">
-              A selection of our most rare and scientifically significant stones currently available.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {/* Value Proposition */}
+      <section className="py-24 bg-luxury-black">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12">
+          {[
+            { icon: ShieldCheck, title: "100+ Years Heritage", subtitle: "Established 1924", color: "text-luxury-ruby", desc: "A century of gemstone expertise passed down through generations." },
+            { icon: Gem, title: "Top 0.1% Quality", subtitle: "Investment Grade", color: "text-luxury-sapphire", desc: "We strictly trade in unheated, inclusion-free, top-tier natural stones." },
+            { icon: Globe, title: "Global Compliance", subtitle: "Certified & Legal", color: "text-luxury-gold", desc: "Fully registered and compliant with international gemstone trading laws." }
+          ].map((item, i) => (
             <motion.div 
-              whileHover={{ scale: 0.98 }}
-              className="relative h-[600px] rounded-3xl overflow-hidden group cursor-pointer"
+               key={i}
+               whileHover={{ y: -10 }}
+               className="text-center p-12 glass-card group transition-all duration-500 hover:border-luxury-gold/30"
             >
-              <div className="absolute inset-0 bg-[url('/luxury_ruby_gemstone_1774331709105.png')] bg-cover bg-center transition-transform duration-1000 group-hover:scale-110" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent p-12 flex flex-col justify-end">
-                <span className="text-luxury-ruby font-bold tracking-widest text-xs uppercase mb-2">Exclusive</span>
-                <h3 className="text-4xl font-bold text-white mb-4">Imperial Rubies</h3>
-                <button className="text-white flex items-center gap-2 group/btn font-bold text-sm tracking-widest uppercase">
-                  Discover <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-2 transition-transform" />
-                </button>
+              <div className={`w-20 h-20 bg-white/5 rounded-3xl flex items-center justify-center mx-auto mb-8 transition-all duration-500 group-hover:scale-110`}>
+                <item.icon className={`w-10 h-10 ${item.color}`} />
               </div>
+              <p className="text-luxury-ruby text-[10px] font-black uppercase tracking-[0.4em] mb-2">{item.subtitle}</p>
+              <h3 className="text-white font-bold text-2xl mb-4 font-display uppercase tracking-tight">{item.title}</h3>
+              <p className="text-gray-500 text-sm leading-relaxed font-light">{item.desc}</p>
             </motion.div>
-
-            <motion.div 
-              whileHover={{ scale: 0.98 }}
-              className="relative h-[600px] rounded-3xl overflow-hidden group cursor-pointer"
-            >
-              <div className="absolute inset-0 bg-[url('/luxury_sapphire_gemstone_1_1774331732593.png')] bg-cover bg-center transition-transform duration-1000 group-hover:scale-110" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent p-12 flex flex-col justify-end">
-                <span className="text-luxury-sapphire font-bold tracking-widest text-xs uppercase mb-2">Reserved</span>
-                <h3 className="text-4xl font-bold text-white mb-4">Royal Blue Sapphires</h3>
-                <button className="text-white flex items-center gap-2 group/btn font-bold text-sm tracking-widest uppercase">
-                  Discover <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-2 transition-transform" />
-                </button>
-              </div>
-            </motion.div>
-          </div>
+          ))}
         </div>
       </section>
 
       <Testimonials />
 
-      {/* Call to Action */}
+      {/* Final Trust CTA */}
       <section className="py-32 relative overflow-hidden">
-        <div className="absolute inset-0 bg-luxury-ruby/10 blur-[120px] -z-10" />
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <Sparkles className="w-12 h-12 text-luxury-gold mx-auto mb-8 animate-spin-slow" />
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">Ready to acquire a masterpiece?</h2>
-          <p className="text-gray-400 mb-12 text-lg font-light">Join our invitation-only platform for gemstone collectors and professional traders.</p>
-          <button className="bg-white text-black px-12 py-5 rounded-full font-bold text-sm tracking-[0.3em] uppercase hover:bg-luxury-gold hover:text-white transition-all">
-            Get Started Now
-          </button>
+        <div className="absolute left-0 bottom-0 w-[500px] h-[500px] bg-luxury-gold/5 blur-[150px] -z-10" />
+        <div className="max-w-5xl mx-auto px-6 text-center">
+          <motion.div
+             initial={{ opacity: 0, y: 20 }}
+             whileInView={{ opacity: 1, y: 0 }}
+             viewport={{ once: true }}
+          >
+            <Sparkles className="w-16 h-16 text-luxury-gold mx-auto mb-10 animate-spin-slow" />
+            <h2 className="text-5xl md:text-7xl font-black text-white mb-8 tracking-tighter font-display uppercase">Secure Your <br />Financial <span className="text-gradient-gold italic">Legacy</span></h2>
+            <p className="text-gray-400 mb-12 text-xl font-light max-w-2xl mx-auto leading-relaxed">Join our private network of elite gemstone collectors and institutional investors.</p>
+            <div className="flex flex-col md:flex-row gap-6 justify-center">
+               <button className="bg-white text-black px-14 py-6 rounded-full font-black text-xs tracking-[0.3em] uppercase hover:bg-luxury-gold hover:text-white transition-all shadow-xl">
+                 Open Client Account
+               </button>
+               <button className="glass-button text-white px-14 py-6 rounded-full font-black text-xs tracking-[0.3em] uppercase">
+                 Contact Concierge
+               </button>
+            </div>
+          </motion.div>
         </div>
       </section>
     </main>
