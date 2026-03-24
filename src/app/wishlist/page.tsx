@@ -1,37 +1,36 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Heart, ArrowRight, Trash, ShoppingCart, Sparkles } from "lucide-react";
 import Link from "next/link";
-
-const wishlistItems = [
-  {
-    id: "1",
-    name: "Imperial Pigeon Blood Ruby",
-    category: "Ruby",
-    carat: 3.42,
-    origin: "Burma",
-    price: 85000,
-    image: "/luxury_ruby_gemstone_1774331709105.png"
-  }
-];
-
-interface WishlistItem {
-  id: string;
-  name: string;
-  category: string;
-  origin: string;
-  price: number;
-  image: string;
-}
+import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
 
 export default function WishlistPage() {
-  const [items, setItems] = useState<WishlistItem[]>(wishlistItems);
+  const { isLoggedIn, isLoading } = useAuth();
+  const router = useRouter();
+  const [items, setItems] = useState<any[]>([]); // Real wishlist items will be fetched from API
+
+  useEffect(() => {
+    if (!isLoading && !isLoggedIn) {
+      router.push("/auth/login");
+    }
+  }, [isLoading, isLoggedIn, router]);
 
   const handleDelete = (id: string) => {
-    setItems(items.filter((item: WishlistItem) => item.id !== id));
+    setItems(items.filter((item) => item.id !== id));
   };
+
+  if (isLoading || !isLoggedIn) {
+    return (
+      <div className="min-h-screen bg-luxury-black flex items-center justify-center">
+        <div className="text-white uppercase tracking-[0.5em] text-[10px] font-black animate-pulse">
+          Accessing Private Watchlist...
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="pt-32 pb-24 bg-black min-h-screen">

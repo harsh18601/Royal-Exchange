@@ -6,12 +6,13 @@ import { Search, ShoppingCart, Heart, User, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 
 import { getSiteConfig } from "@/lib/contentful";
+import { useAuth } from "@/context/AuthContext";
 
 const Navbar = () => {
+  const { user, isLoggedIn, logout } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
   const [siteConfig, setSiteConfig] = useState<any>(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     getSiteConfig().then(setSiteConfig);
@@ -71,31 +72,40 @@ const Navbar = () => {
             >
               <Search className="w-5 h-5" />
             </button>
-            <Link href="/wishlist" className="hover:text-white transition-colors relative">
-              <Heart className="w-5 h-5" />
-            </Link>
-            <Link href="/cart" className="hover:text-white transition-colors relative">
-              <ShoppingCart className="w-5 h-5" />
-            </Link>
+            {isLoggedIn && (
+              <>
+                <Link href="/wishlist" className="hover:text-white transition-colors relative">
+                  <Heart className="w-5 h-5" />
+                </Link>
+                <Link href="/cart" className="hover:text-white transition-colors relative">
+                  <ShoppingCart className="w-5 h-5" />
+                </Link>
+              </>
+            )}
             
             {isLoggedIn ? (
-              <div className="flex items-center gap-4">
-                <Link href="/dashboard" className="text-xs font-bold uppercase tracking-widest hover:text-white transition-colors">Dashboard</Link>
+              <div className="flex items-center gap-6">
+                <Link href="/dashboard" className="text-[10px] font-black uppercase tracking-[0.3em] hover:text-luxury-gold transition-colors flex items-center gap-2">
+                  <div className="w-7 h-7 bg-luxury-ruby rounded-lg flex items-center justify-center text-[10px] text-white">
+                    {user?.name?.substring(0, 1)}
+                  </div>
+                  <span className="hidden lg:block">Account</span>
+                </Link>
                 <button 
-                  onClick={() => setIsLoggedIn(false)}
-                  className="bg-white/5 hover:bg-white/10 border border-white/10 px-4 py-2 rounded-full transition-all text-xs uppercase tracking-widest"
+                  onClick={logout}
+                  className="text-gray-500 hover:text-white text-[10px] font-black uppercase tracking-widest transition-colors"
                 >
-                  Logout
+                  Close Session
                 </button>
               </div>
             ) : (
-              <button 
-                onClick={() => setIsLoggedIn(true)}
-                className="bg-white/5 hover:bg-white/10 border border-white/10 px-4 py-2 rounded-full transition-all flex items-center gap-2"
+              <Link 
+                href="/auth/login"
+                className="bg-white/5 hover:bg-white/10 border border-white/10 px-6 py-3 rounded-full transition-all flex items-center gap-2 group"
               >
-                <User className="w-4 h-4" />
-                <span className="text-xs uppercase tracking-widest px-2">Client Login</span>
-              </button>
+                <User className="w-4 h-4 group-hover:text-luxury-gold transition-colors" />
+                <span className="text-[10px] font-black uppercase tracking-[0.2em]">Client Login</span>
+              </Link>
             )}
           </div>
         </div>

@@ -1,23 +1,55 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ShoppingCart, ArrowRight, ShieldCheck, Mail, Phone, Trash } from "lucide-react";
+import { ShoppingCart, ArrowRight, ShieldCheck, Mail, Phone, Trash, ShoppingBag } from "lucide-react";
 import Link from "next/link";
-
-const cartItems = [
-  {
-    id: "2",
-    name: "Royal Velvet Blue Sapphire",
-    category: "Sapphire",
-    carat: 5.12,
-    origin: "Sri Lanka",
-    price: 120000,
-    image: "/luxury_sapphire_gemstone_1_1774331732593.png"
-  }
-];
+import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
 
 export default function CartPage() {
+  const { isLoggedIn, isLoading } = useAuth();
+  const router = useRouter();
+  const [cartItems, setCartItems] = useState<any[]>([]); // Real cart items will be fetched from API
   const subtotal = cartItems.reduce((acc, item) => acc + item.price, 0);
+
+  useEffect(() => {
+    if (!isLoading && !isLoggedIn) {
+      router.push("/auth/login");
+    }
+  }, [isLoading, isLoggedIn, router]);
+
+  if (isLoading || !isLoggedIn) {
+    return (
+      <div className="min-h-screen bg-luxury-black flex items-center justify-center">
+        <div className="text-white uppercase tracking-[0.5em] text-[10px] font-black animate-pulse">
+          Securing Acquisition Terminal...
+        </div>
+      </div>
+    );
+  }
+
+  if (cartItems.length === 0) {
+    return (
+      <div className="pt-40 pb-24 bg-luxury-black min-h-screen">
+        <div className="max-w-7xl mx-auto px-6 text-center">
+          <div className="w-24 h-24 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-10 border border-white/10">
+            <ShoppingBag className="w-10 h-10 text-gray-600" />
+          </div>
+          <h1 className="text-4xl font-black text-white uppercase tracking-tighter mb-6">Your Portfolio is Empty</h1>
+          <p className="text-gray-500 text-xs font-bold uppercase tracking-[0.4em] max-w-md mx-auto mb-12 leading-relaxed">
+            Begin your investment journey by exploring our private collection of certified gemstones.
+          </p>
+          <Link 
+            href="/catalog"
+            className="inline-flex items-center gap-3 bg-luxury-ruby text-white px-12 py-5 rounded-full font-black uppercase tracking-[0.2em] text-[10px] hover:bg-red-700 transition-all"
+          >
+            Explore Collection <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="pt-32 pb-24 bg-black min-h-screen">

@@ -1,7 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
 import { 
   Wallet, 
   Clock, 
@@ -11,11 +13,30 @@ import {
   ChevronRight, 
   TrendingUp, 
   ShieldCheck,
-  CreditCard
+  CreditCard,
+  ShoppingBag
 } from "lucide-react";
 
 export default function DashboardPage() {
+  const { user, isLoggedIn, isLoading, logout } = useAuth();
+  const router = useRouter();
   const [activeTab, setActiveTab ] = useState("overview");
+
+  useEffect(() => {
+    if (!isLoading && !isLoggedIn) {
+      router.push("/auth/login");
+    }
+  }, [isLoading, isLoggedIn, router]);
+
+  if (isLoading || !isLoggedIn) {
+    return (
+      <div className="min-h-screen bg-luxury-black flex items-center justify-center">
+        <div className="text-white uppercase tracking-[0.5em] text-[10px] font-black animate-pulse">
+          Establishing Secure Connection...
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="pt-32 pb-24 bg-luxury-black min-h-screen">
@@ -25,10 +46,12 @@ export default function DashboardPage() {
           <div className="lg:col-span-3">
              <div className="glass-card p-8 sticky top-32">
                 <div className="flex items-center gap-4 mb-10">
-                   <div className="w-12 h-12 bg-luxury-ruby rounded-2xl flex items-center justify-center font-black text-white">HG</div>
+                   <div className="w-12 h-12 bg-luxury-ruby rounded-2xl flex items-center justify-center font-black text-white">
+                      {user?.name?.substring(0, 2).toUpperCase()}
+                   </div>
                    <div>
-                      <h4 className="text-white font-bold uppercase text-xs tracking-widest">Harsh G.</h4>
-                      <p className="text-gray-500 text-[10px] font-bold uppercase tracking-widest">Elite Member</p>
+                      <h4 className="text-white font-bold uppercase text-xs tracking-widest">{user?.name}</h4>
+                      <p className="text-gray-500 text-[10px] font-bold uppercase tracking-widest">{user?.role === 'admin' ? 'Administrator' : 'Elite Member'}</p>
                    </div>
                 </div>
 
@@ -53,7 +76,10 @@ export default function DashboardPage() {
                         <ChevronRight className={`w-3 h-3 ${activeTab === item.id ? "opacity-100" : "opacity-0"}`} />
                      </button>
                    ))}
-                   <button className="w-full flex items-center gap-3 p-4 rounded-xl text-gray-500 hover:text-red-500 transition-all mt-8">
+                   <button 
+                     onClick={logout}
+                     className="w-full flex items-center gap-3 p-4 rounded-xl text-gray-500 hover:text-red-500 transition-all mt-8"
+                   >
                       <LogOut className="w-4 h-4" />
                       <span className="text-[10px] font-black uppercase tracking-widest">Log Out</span>
                    </button>
@@ -103,36 +129,21 @@ export default function DashboardPage() {
                 animate={{ opacity: 1, y: 0 }}
                 className="glass-card p-10 min-h-[500px]"
              >
-                {activeTab === "overview" && (
-                  <>
-                    <h3 className="text-white font-bold text-xl uppercase tracking-tighter mb-8 font-display">Portfolio Activity</h3>
-                    <div className="space-y-6">
-                       {[
-                         { stone: "3.42ct Imperial Ruby", status: "In Vault", value: "$85,000", date: "2 hours ago" },
-                         { stone: "Royal Blue Sapphire", status: "In Transit", value: "$120,000", date: "Yesterday" },
-                         { stone: "Ceylon Deep Blue", status: "Pending Cert", value: "$45,200", date: "3 days ago" }
-                       ].map((item, i) => (
-                         <div key={i} className="flex items-center justify-between p-6 bg-white/5 rounded-2xl hover:bg-white/10 transition-all cursor-pointer">
-                            <div className="flex items-center gap-6">
-                               <div className="w-12 h-12 bg-zinc-800 rounded-xl overflow-hidden">
-                                  <img src="/luxury_ruby_gemstone_1774331709105.png" className="w-full h-full object-cover" />
-                               </div>
-                               <div>
-                                  <h4 className="text-white font-bold text-sm uppercase">{item.stone}</h4>
-                                  <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">{item.date}</p>
-                               </div>
-                            </div>
-                            <div className="text-right">
-                               <p className="text-white font-bold text-sm">{item.value}</p>
-                               <p className={`text-[8px] font-black uppercase tracking-widest ${item.status === "In Vault" ? "text-green-500" : "text-luxury-gold"}`}>
-                                 {item.status}
-                               </p>
-                            </div>
-                         </div>
-                       ))}
-                    </div>
-                  </>
-                )}
+                 {activeTab === "overview" && (
+                   <div className="flex flex-col items-center justify-center py-20 text-center">
+                     <div className="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mb-8 border border-white/10 group animate-pulse">
+                        <ShoppingBag className="w-8 h-8 text-gray-500 group-hover:text-luxury-ruby transition-colors" />
+                     </div>
+                     <h3 className="text-white font-bold text-xl uppercase tracking-widest mb-4">No Active Acquisitions</h3>
+                     <p className="text-gray-500 text-xs font-medium max-w-sm mb-10 leading-relaxed uppercase tracking-widest">Your private vault is currently empty. Explore our investment-grade collection to start building your legacy.</p>
+                     <a 
+                       href="/catalog"
+                       className="px-10 py-4 bg-luxury-ruby text-white text-[10px] font-black uppercase tracking-[0.3em] rounded-full hover:bg-red-700 transition-all shadow-xl shadow-red-900/20"
+                     >
+                       Browse Catalog
+                     </a>
+                   </div>
+                 )}
                 {activeTab !== "overview" && (
                    <div className="flex flex-col items-center justify-center h-80 opacity-20">
                       <Clock className="w-12 h-12 mb-4" />
