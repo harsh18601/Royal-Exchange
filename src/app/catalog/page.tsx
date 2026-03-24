@@ -1,52 +1,30 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Filter, Search, ChevronDown, Sparkles, ArrowRight, Heart, ShoppingCart } from "lucide-react";
-import Image from "next/image";
+import { Filter, ChevronDown, Sparkles, ArrowRight, Heart, ShoppingCart } from "lucide-react";
 import Link from "next/link";
-
-const gems = [
-  {
-    id: "1",
-    name: "Imperial Pigeon Blood Ruby",
-    category: "Ruby",
-    carat: 3.42,
-    color: "Vivid Red",
-    origin: "Burma (Myanmar)",
-    price: 85000,
-    image: "/luxury_ruby_gemstone_1774331709105.png",
-    rarity: 98,
-    investment: 95
-  },
-  {
-    id: "2",
-    name: "Royal Velvet Blue Sapphire",
-    category: "Sapphire",
-    carat: 5.12,
-    color: "Royal Blue",
-    origin: "Sri Lanka (Ceylon)",
-    price: 120000,
-    image: "/luxury_sapphire_gemstone_1_1774331732593.png",
-    rarity: 94,
-    investment: 97
-  },
-  {
-    id: "3",
-    name: "Midnight Azure Sapphire",
-    category: "Sapphire",
-    carat: 4.85,
-    color: "Deep Blue",
-    origin: "Madagascar",
-    price: 65000,
-    image: "/luxury_sapphire_gemstone_2_1774331749919.png",
-    rarity: 89,
-    investment: 91
-  }
-];
+import { getGemstones } from "@/lib/contentful";
+import { hardcodedGems } from "@/lib/data";
 
 export default function CatalogPage() {
-  const [filter, setFilter] = useState("All");
+  const [filter, setFilter] = useState("All Gemstones");
+  const [gems, setGems] = useState(hardcodedGems);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const cmsGems = await getGemstones();
+      if (cmsGems && cmsGems.length > 0) {
+        const mappedGems = cmsGems.map((item: any) => ({
+          id: item.sys.id,
+          ...item.fields,
+          image: item.fields.image?.fields?.file?.url || item.fields.image || "/luxury_ruby_gemstone_1774331709105.png"
+        }));
+        setGems(mappedGems);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <div className="pt-32 pb-24 bg-black min-h-screen">

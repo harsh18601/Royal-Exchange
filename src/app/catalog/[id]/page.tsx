@@ -4,47 +4,90 @@ import { motion } from "framer-motion";
 import { Sparkles, ShieldCheck, Globe, Gem, ArrowLeft, Heart, ShoppingCart, MessageSquare, Download } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { useState, useEffect } from "react";
+import { getGemstoneById } from "@/lib/contentful";
+import { hardcodedGems, Gemstone } from "@/lib/data"; // Import Gemstone type
 
-const gemData = {
-  "1": {
-    name: "Imperial Pigeon Blood Ruby",
-    category: "Ruby",
-    carat: 3.42,
-    color: "Vivid Red",
-    origin: "Burma (Myanmar)",
-    treatment: "None (Unheated)",
-    price: 85000,
-    image: "/luxury_ruby_gemstone_1774331709105.png",
-    description: "A breathtaking example of the highest grade of Burmese ruby. This stone exhibits the legendary 'Pigeon Blood' hue with secondary purple undertones that glow even in low light.",
-    lab: "GIA",
-    certNo: "GIA-2024-8832",
-    dimensions: "8.4 x 6.2 x 4.1 mm",
-    rarity: 98,
-    investment: 95,
-    value: 92
-  },
-  "2": {
-    name: "Royal Velvet Blue Sapphire",
-    category: "Sapphire",
-    carat: 5.12,
-    color: "Royal Blue",
-    origin: "Sri Lanka (Ceylon)",
-    treatment: "None (Unheated)",
-    price: 120000,
-    image: "/luxury_sapphire_gemstone_1_1774331732593.png",
-    description: "An exceptional Royal Blue sapphire from the historic mines of Ceylon. Incredible saturation and velvet-like appearance make it a true investment masterpiece.",
-    lab: "IGI",
-    certNo: "IGI-SAP-9921",
-    dimensions: "10.2 x 8.4 x 5.8 mm",
-    rarity: 94,
-    investment: 97,
-    value: 90
-  }
-};
+// Define a type for the Contentful entry structure if not already defined globally
+// This is a simplified example, a real Contentful type would be more detailed.
+interface ContentfulAsset {
+  fields: {
+    file: {
+      url: string;
+      details: {
+        size: number;
+        image?: {
+          width: number;
+          height: number;
+        };
+      };
+      fileName: string;
+      contentType: string;
+    };
+  };
+}
+
+interface ContentfulGemstoneFields {
+  name: string;
+  description: string;
+  price: number;
+  carat: number;
+  dimensions: string;
+  treatment: string;
+  certNo: string;
+  rarity: number;
+  investment: number;
+  value: number;
+  category: string;
+  origin: string;
+  lab: string;
+  image: ContentfulAsset | string; // Can be an asset or a direct URL string
+}
+
+interface ContentfulGemstoneEntry {
+  sys: {
+    id: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: string;
+        linkType: "ContentType";
+        type: "Link";
+      };
+    };
+  };
+  fields: ContentfulGemstoneFields;
+}
+
 
 export default function GemDetailsPage() {
   const params = useParams();
-  const gem = gemData[params.id as keyof typeof gemData] || gemData["1"];
+  const [gem, setGem] = useState<Gemstone | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (params.id) {
+        const cmsGem: any = await getGemstoneById(params.id as string);
+        if (cmsGem) {
+          setGem({
+            id: cmsGem.sys.id,
+            ...cmsGem.fields,
+            // Safely access the image URL, falling back to the direct image field or a default
+            image: (cmsGem.fields.image as ContentfulAsset)?.fields?.file?.url || (cmsGem.fields.image as string) || "/luxury_ruby_gemstone_1774331709105.png"
+          } as Gemstone);
+        } else {
+          // Fallback to hardcoded
+          const fallback = hardcodedGems.find((g: Gemstone) => g.id === params.id) || hardcodedGems[0];
+          setGem(fallback);
+        }
+      }
+    };
+    fetchData();
+  }, [params.id]);
+
+  if (!gem) return <div className="min-h-screen bg-black flex items-center justify-center text-white uppercase tracking-[0.5em] text-xs">Initializing GemAI Intelligence...</div>;
 
   return (
     <div className="pt-32 pb-24 bg-black min-h-screen">
