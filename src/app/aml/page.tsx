@@ -19,7 +19,7 @@ export default function AMLPage() {
           </div>
           
           <p className="text-gray-400 text-lg mb-12 font-light leading-relaxed">
-            The Royal Ruby & Sapphire Exchange maintains a zero-tolerance policy regarding money laundering and the financing of illicit activities. Our platform is strictly compliant with international gemstone trading regulations and Swiss AML laws.
+            Gemora maintains a zero-tolerance policy regarding money laundering and the financing of illicit activities. Our platform is strictly compliant with international gemstone trading regulations and Swiss AML laws.
           </p>
 
           <div className="space-y-6 mb-16">

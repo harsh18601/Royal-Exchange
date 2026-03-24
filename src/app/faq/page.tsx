@@ -20,7 +20,7 @@ export default function FAQPage() {
     <div className="pt-40 pb-24 bg-black min-h-screen text-white">
       <div className="max-w-4xl mx-auto px-6">
         <h1 className="text-5xl font-black uppercase mb-4">Support & FAQ</h1>
-        <p className="text-gray-400 mb-16 max-w-md">Everything you need to know about trading rubies and sapphires on the Royal Exchange.</p>
+        <p className="text-gray-400 mb-16 max-w-md">Everything you need to know about discovering rubies and sapphires through Gemora.</p>
         
         <div className="space-y-4">
           {faqs.map((faq, i) => (

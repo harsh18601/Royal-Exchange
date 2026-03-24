@@ -6,6 +6,8 @@ import { Filter, ChevronDown, Sparkles, ArrowRight, Heart, ShoppingCart } from "
 import Link from "next/link";
 import { getGemstones } from "@/lib/contentful";
 import { Gemstone } from "@/lib/data";
+import { useCurrency } from "@/context/CurrencyContext";
+import { useWishlist } from "@/context/WishlistContext";
 
 export default function CatalogPage() {
   const [filter, setFilter] = useState("All Gemstones");
@@ -39,7 +41,7 @@ export default function CatalogPage() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-8">
           <div>
-            <h1 className="text-4xl md:text-6xl font-black text-white mb-4 tracking-tighter uppercase">The Exchange</h1>
+            <h1 className="text-4xl md:text-6xl font-black text-white mb-4 tracking-tighter uppercase">Gemora Collection</h1>
             <div className="w-20 h-1 bg-luxury-ruby mb-6" />
             <p className="text-gray-400 font-light max-w-md">Browse our curated collection of ethically sourced, investment-grade loose gemstones.</p>
           </div>
@@ -85,7 +87,9 @@ export default function CatalogPage() {
 }
 
 function GemstoneCard({ gem, index }: { gem: any; index: number }) {
-  const [isWishlisted, setIsWishlisted] = useState(false);
+  const { toggleWishlist, isInWishlist } = useWishlist();
+  const isWishlisted = isInWishlist(gem.id);
+  const { formatPrice } = useCurrency();
 
   return (
     <motion.div
@@ -110,7 +114,7 @@ function GemstoneCard({ gem, index }: { gem: any; index: number }) {
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                setIsWishlisted(!isWishlisted);
+                toggleWishlist(gem.id);
               }}
               className={`p-3 backdrop-blur-md rounded-full transition-all duration-300 translate-x-4 group-hover:translate-x-0 ${
                 isWishlisted 
@@ -145,7 +149,7 @@ function GemstoneCard({ gem, index }: { gem: any; index: number }) {
               <p className="text-luxury-ruby text-[10px] font-black uppercase tracking-[0.3em] mb-1">{gem.category} • {gem.origin}</p>
               <h3 className="text-white font-bold text-xl group-hover:text-luxury-ruby transition-colors">{gem.name}</h3>
             </div>
-            <p className="text-white font-mono text-lg">${gem.price.toLocaleString()}</p>
+            <p className="text-white font-mono text-lg">{formatPrice(gem.price)}</p>
           </div>
 
           <div className="flex items-center justify-between pt-6 border-t border-white/5">

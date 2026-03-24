@@ -144,7 +144,7 @@ export default function RegisterPage() {
               href="/auth/login" 
               className="text-white text-xs font-black uppercase tracking-[0.2em] border-b border-white/20 hover:border-luxury-gold transition-all"
             >
-              Sign In to Exchange
+              Sign In to Gemora
             </Link>
           </div>
         </div>

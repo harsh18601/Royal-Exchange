@@ -15,7 +15,7 @@ export default function AboutPage() {
              <p className="text-luxury-gold font-black uppercase tracking-[0.6em] text-[10px] mb-4">The Legacy of Excellence</p>
              <h1 className="text-6xl md:text-8xl font-black text-white uppercase font-display tracking-tight mb-8">A Century <br /><span className="text-gradient-gold italic">of Sovereignty</span></h1>
              <p className="text-gray-400 text-xl font-light leading-relaxed">
-               Founded in 1924, Royal Exchange has redefined the art of gemstone acquisition. From the mines of Mogok to the vaults of Geneva, our journey is etched in the world's most rare stones.
+               Founded in 1924, Gemora has redefined the art of gemstone acquisition. From the mines of Mogok to the vaults of Geneva, our journey is etched in the world's most rare stones.
              </p>
           </motion.div>
         </header>

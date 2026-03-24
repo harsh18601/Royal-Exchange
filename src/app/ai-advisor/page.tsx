@@ -6,7 +6,7 @@ import { Sparkles, Send, Bot, User, ArrowRight, TrendingUp, ShieldCheck, Zap } f
 
 export default function AIAdvisorPage() {
   const [messages, setMessages] = useState([
-    { role: "assistant", content: "Welcome, Client. I am your GemAI Advisor. How can I assist you with your loose gemstone acquisition today?" }
+    { role: "assistant", content: "Welcome, Client. I am your AI Gem Advisor. How can I assist you with your loose gemstone acquisition today?" }
   ]);
   const [input, setInput] = useState("");
 
@@ -39,7 +39,7 @@ export default function AIAdvisorPage() {
                 <Sparkles className="text-white w-6 h-6" />
               </div>
               <div>
-                <h2 className="text-white font-bold text-xl uppercase tracking-tighter">GEMAI <span className="text-luxury-ruby">ADVISOR</span></h2>
+                <h2 className="text-white font-bold text-xl uppercase tracking-tighter">AI GEM <span className="text-luxury-ruby">ADVISOR</span></h2>
                 <p className="text-gray-500 text-xs font-bold uppercase tracking-widest">Active Intelligence</p>
               </div>
             </div>

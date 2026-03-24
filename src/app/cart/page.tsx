@@ -7,19 +7,15 @@ import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 
+import { useCurrency } from "@/context/CurrencyContext";
+
 export default function CartPage() {
   const { isLoggedIn, isLoading } = useAuth();
-  const router = useRouter();
+  const { formatPrice } = useCurrency();
   const [cartItems, setCartItems] = useState<any[]>([]); // Real cart items will be fetched from API
   const subtotal = cartItems.reduce((acc, item) => acc + item.price, 0);
 
-  useEffect(() => {
-    if (!isLoading && !isLoggedIn) {
-      router.push("/auth/login");
-    }
-  }, [isLoading, isLoggedIn, router]);
-
-  if (isLoading || !isLoggedIn) {
+  if (isLoading) {
     return (
       <div className="min-h-screen bg-luxury-black flex items-center justify-center">
         <div className="text-white uppercase tracking-[0.5em] text-[10px] font-black animate-pulse">
@@ -29,22 +25,26 @@ export default function CartPage() {
     );
   }
 
-  if (cartItems.length === 0) {
+  if (!isLoggedIn || cartItems.length === 0) {
     return (
       <div className="pt-40 pb-24 bg-luxury-black min-h-screen">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <div className="w-24 h-24 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-10 border border-white/10">
             <ShoppingBag className="w-10 h-10 text-gray-600" />
           </div>
-          <h1 className="text-4xl font-black text-white uppercase tracking-tighter mb-6">Your Portfolio is Empty</h1>
+          <h1 className="text-4xl font-black text-white uppercase tracking-tighter mb-6">
+            {!isLoggedIn ? "Access Restricted" : "Your Portfolio is Empty"}
+          </h1>
           <p className="text-gray-500 text-xs font-bold uppercase tracking-[0.4em] max-w-md mx-auto mb-12 leading-relaxed">
-            Begin your investment journey by exploring our private collection of certified gemstones.
+            {!isLoggedIn 
+              ? "Please establish a secure connection to view your private acquisition portfolio."
+              : "Begin your investment journey by exploring our private collection of certified gemstones."}
           </p>
           <Link 
-            href="/catalog"
+            href={!isLoggedIn ? "/auth/login" : "/catalog"}
             className="inline-flex items-center gap-3 bg-luxury-ruby text-white px-12 py-5 rounded-full font-black uppercase tracking-[0.2em] text-[10px] hover:bg-red-700 transition-all"
           >
-            Explore Collection <ArrowRight className="w-4 h-4" />
+            {!isLoggedIn ? "Secure Login" : "Explore Collection"} <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </div>
@@ -81,9 +81,9 @@ export default function CartPage() {
                        </div>
                        <button className="text-gray-600 hover:text-luxury-ruby transition-colors"><Trash className="w-4 h-4" /></button>
                     </div>
-                    <div className="flex items-center justify-between mt-4">
+                   <div className="flex items-center justify-between mt-4">
                       <p className="text-xs text-gray-400">{item.carat} Carats • {item.origin}</p>
-                      <p className="text-white font-mono font-bold">${item.price.toLocaleString()}</p>
+                      <p className="text-white font-mono font-bold">{formatPrice(item.price)}</p>
                     </div>
                   </div>
                 </motion.div>
@@ -97,7 +97,7 @@ export default function CartPage() {
               <div className="space-y-4">
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-500">Asset Subtotal</span>
-                  <span className="text-white font-mono">${subtotal.toLocaleString()}</span>
+                  <span className="text-white font-mono">{formatPrice(subtotal)}</span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-500">Insured Shipping</span>
@@ -105,7 +105,7 @@ export default function CartPage() {
                 </div>
                 <div className="pt-4 border-t border-white/5 flex justify-between">
                   <span className="text-white font-black uppercase tracking-widest">Grand Total</span>
-                  <span className="text-luxury-sapphire text-xl font-mono">${subtotal.toLocaleString()}</span>
+                  <span className="text-luxury-sapphire text-xl font-mono">{formatPrice(subtotal)}</span>
                 </div>
               </div>
 

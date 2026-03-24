@@ -31,7 +31,7 @@ export default function ContactPage() {
               </div>
               <div>
                 <h4 className="text-white font-bold mb-1 uppercase text-xs tracking-widest">Email Our Desk</h4>
-                <p className="text-gray-400 font-light">{siteConfig?.fields?.email || "concierge@royal-exchange.com"}</p>
+                <p className="text-gray-400 font-light">{siteConfig?.fields?.email || "concierge@gemora.com"}</p>
               </div>
             </div>
             <div className="flex items-start gap-4 group">
@@ -40,7 +40,7 @@ export default function ContactPage() {
               </div>
               <div>
                 <h4 className="text-white font-bold mb-1 uppercase text-xs tracking-widest">Direct Wholesale Line</h4>
-                <p className="text-gray-400 font-light">{siteConfig?.fields?.phone || "+1 (800) ROYAL-GEM"}</p>
+                <p className="text-gray-400 font-light">{siteConfig?.fields?.phone || "+1 (800) GEMORA-1"}</p>
               </div>
             </div>
             <div className="flex items-start gap-4 group">

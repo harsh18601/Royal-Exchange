@@ -96,7 +96,7 @@ export default function LoginPage() {
           </form>
 
           <div className="mt-10 pt-10 border-t border-white/5 text-center">
-            <p className="text-gray-500 text-[10px] font-bold uppercase tracking-widest mb-4">New to the Exchange?</p>
+            <p className="text-gray-500 text-[10px] font-bold uppercase tracking-widest mb-4">New to Gemora?</p>
             <Link 
               href="/auth/register" 
               className="text-white text-xs font-black uppercase tracking-[0.2em] border-b border-white/20 hover:border-luxury-ruby transition-all"

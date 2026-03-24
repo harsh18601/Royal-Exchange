@@ -4,25 +4,28 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { AuthProvider } from "@/context/AuthContext";
+import { CurrencyProvider } from "@/context/CurrencyContext";
+import { WishlistProvider } from "@/context/WishlistContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Royal Exchange | Luxury Gemstone Marketplace & Investment Hub",
-  description: "The world's premier AI-powered marketplace for certified, investment-grade loose Ruby and Sapphire gemstones. Heritage, Trust, and Excellence since 1924.",
-  keywords: ["luxury gemstones", "investment rubies", "certified sapphires", "GIA rubies", "loose gemstones", "jewellery investment", "Royal Exchange"],
-  authors: [{ name: "Royal Exchange Heritage" }],
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'),
+  title: "Gemora | Luxury Gemstones & Private Collection",
+  description: "Gemora presents rare, certified Ruby and Sapphire gemstones for collectors seeking heritage, trust, and refined sourcing.",
+  keywords: ["luxury gemstones", "investment rubies", "certified sapphires", "GIA rubies", "loose gemstones", "jewellery investment", "Gemora"],
+  authors: [{ name: "Gemora Heritage" }],
   openGraph: {
-    title: "Royal Exchange | Luxury Gemstone Marketplace",
-    description: "Acquire investment-grade, ethically sourced Rubies and Sapphires through our AI-curated private exchange.",
-    url: "https://royal-exchange.luxury",
-    siteName: "Royal Exchange",
+    title: "Gemora | Luxury Gemstones",
+    description: "Discover rare, investment-grade Rubies and Sapphires sourced from the world's most prestigious mines.",
+    url: "https://gemora.luxury",
+    siteName: "Gemora",
     images: [
       {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Royal Exchange Luxury Gemstones",
+        alt: "Gemora Luxury Gemstones",
       },
     ],
     locale: "en_US",
@@ -30,8 +33,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Royal Exchange | Luxury Gemstones",
-    description: "The premier AI-powered marketplace for investment-grade gemstones.",
+    title: "Gemora | Luxury Gemstones",
+    description: "A refined destination for rare natural gemstones.",
     images: ["/og-image.jpg"],
   },
   icons: {
@@ -48,15 +51,19 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={inter.className}>
-        <AuthProvider>
-          <Navbar />
-          {children}
-          <Footer />
-        </AuthProvider>
+        <CurrencyProvider>
+          <AuthProvider>
+            <WishlistProvider>
+              <Navbar />
+              {children}
+              <Footer />
+            </WishlistProvider>
+          </AuthProvider>
+        </CurrencyProvider>
         
         {/* WhatsApp Floating Button */}
         <a 
-          href="https://wa.me/918306469764?text=Hello%2C%20I%20am%20interested%20in%20acquiring%20a%20high-grade%20gemstone%20from%20Royal%20Exchange." 
+          href="https://wa.me/918306469764?text=Hello%2C%20I%20am%20interested%20in%20acquiring%20a%20high-grade%20gemstone%20from%20Gemora." 
           target="_blank" 
           rel="noopener noreferrer"
           className="fixed bottom-8 right-8 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform flex items-center justify-center group"

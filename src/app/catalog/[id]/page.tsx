@@ -7,6 +7,8 @@ import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { getGemstoneById } from "@/lib/contentful";
 import { Gemstone } from "@/lib/data"; 
+import { useCurrency } from "@/context/CurrencyContext";
+import { useWishlist } from "@/context/WishlistContext";
 
 // Define a type for the Contentful entry structure if not already defined globally
 // This is a simplified example, a real Contentful type would be more detailed.
@@ -66,7 +68,10 @@ export default function GemDetailsPage() {
     }
   }, [gem]);
 
-  if (!gem) return <div className="min-h-screen bg-luxury-black flex items-center justify-center text-white uppercase tracking-[0.5em] text-[10px] font-black">Initializing GemAI Intelligence...</div>;
+  const { formatPrice } = useCurrency();
+  const { toggleWishlist, isInWishlist } = useWishlist();
+
+  if (!gem) return <div className="min-h-screen bg-luxury-black flex items-center justify-center text-white uppercase tracking-[0.5em] text-[10px] font-black">Initializing AI Gem Intelligence...</div>;
 
   const handleInquirySubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -101,7 +106,7 @@ export default function GemDetailsPage() {
     <div className="pt-32 pb-24 bg-luxury-black min-h-screen">
       <div className="max-w-7xl mx-auto px-6">
         <Link href="/catalog" className="inline-flex items-center gap-2 text-gray-500 hover:text-white transition-colors mb-12 uppercase tracking-widest text-xs font-bold group">
-          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Back to Exchange
+          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Back to Collection
         </Link>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
@@ -149,7 +154,7 @@ export default function GemDetailsPage() {
             <h1 className="text-4xl md:text-6xl font-black text-white mb-6 uppercase leading-tight">{gem.name}</h1>
             
             <div className="flex items-center gap-8 mb-10">
-              <div className="text-3xl font-mono text-white">${gem.price?.toLocaleString()}</div>
+              <div className="text-3xl font-mono text-white">{formatPrice(gem.price)}</div>
               <div className="h-10 w-px bg-white/10" />
               <div className="text-gray-400 font-light italic">Immediate secure global delivery available</div>
             </div>
@@ -178,7 +183,7 @@ export default function GemDetailsPage() {
             <div className="glass-card p-10 shadow-2xl mb-12">
               <div className="flex items-center gap-2 mb-6">
                 <Sparkles className="w-5 h-5 text-luxury-gold" />
-                <h3 className="text-white font-bold uppercase tracking-widest">GemAI Intelligence Analysis</h3>
+                <h3 className="text-white font-bold uppercase tracking-widest">AI Gem Intelligence Analysis</h3>
               </div>
               <div className="grid grid-cols-3 gap-6">
                  <div className="space-y-2">
@@ -210,12 +215,24 @@ export default function GemDetailsPage() {
                 <ShoppingCart className="w-4 h-4" /> Add to Cart
               </button>
               <button 
-                onClick={() => setShowInquiryModal(true)}
-                className="bg-white/5 border border-white/10 text-white font-bold py-5 rounded-full flex items-center justify-center gap-3 hover:bg-white/10 transition-all uppercase tracking-widest text-xs"
+                onClick={() => toggleWishlist(gem.id)}
+                className={`border font-bold py-5 rounded-full flex items-center justify-center gap-3 transition-all uppercase tracking-widest text-xs ${
+                  isInWishlist(gem.id)
+                    ? "bg-luxury-ruby border-luxury-ruby text-white"
+                    : "bg-white/5 border-white/10 text-white hover:bg-white/10"
+                }`}
               >
-                <MessageSquare className="w-4 h-4" /> Private Inquiry
+                <Heart className={`w-4 h-4 ${isInWishlist(gem.id) ? "fill-current" : ""}`} /> 
+                {isInWishlist(gem.id) ? "In Wishlist" : "Add to Wishlist"}
               </button>
             </div>
+
+            <button 
+              onClick={() => setShowInquiryModal(true)}
+              className="w-full mt-4 bg-white/5 border border-white/10 text-white font-bold py-5 rounded-full flex items-center justify-center gap-3 hover:bg-white/10 transition-all uppercase tracking-widest text-xs"
+            >
+              <MessageSquare className="w-4 h-4" /> Private Inquiry
+            </button>
             {gem.labCertificatePdf?.fields?.file?.url && (
               <a 
                 href={gem.labCertificatePdf.fields.file.url} 
